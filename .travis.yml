@@ -1,0 +1,27 @@
+language: python
+python:
+    - "2.7"
+
+sudo: required
+        
+branches:
+    - master
+
+env:
+    global:
+        - USR_NAME="OlafFilies"
+        - USR_EMAIL="Olaf.Filies@infineon.com"
+    matrix:
+        - PLATFORMIO_CI_SRC=examples/Control2Motors 
+        - PLATFORMIO_CI_SRC=examples/rampSpeedTest
+        - PLATFORMIO_CI_SRC=examples/rampTest
+        - PLATFORMIO_CI_SRC=examples/speedControl
+
+install:
+    # build with stable core
+    - pip install -U platformio
+    - platformio platform install -f infineonxmc
+    - platformio platform install -f atmelavr
+
+script:
+    - platformio ci --lib="." --board=xmc1100_boot_kit --board=xmc4700_relax_kit --board=uno
